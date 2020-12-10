@@ -34,4 +34,6 @@ int main()
     test1(c);
     test2(move(c));
     cout << &c << endl;
+
+    cout << is_rvalue_reference<decltype(move(c))>::value << endl;
 }
