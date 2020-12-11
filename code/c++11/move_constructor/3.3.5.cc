@@ -6,33 +6,29 @@ class Constructor
 {
 public:
     Constructor() { cout << "constructor\n"; }
-    // Constructor(Constructor &mc) { cout << "copy constructor\n"; }
+    ~Constructor() { cout << "~constructor\n"; }
+    Constructor(Constructor &mc) { cout << "copy constructor\n"; }
     Constructor(const Constructor &mc) { cout << "copy constructor\n"; }
     Constructor(Constructor &&mc) { cout << "move constructor\n"; }
+    // Constructor(Constructor &&) = delete;
 
     void print() { cout << "print\n"; }
+    int i;
 };
 
-void test1(Constructor &c)
+Constructor set(Constructor c)
 {
     Constructor cc = move(c);
-    cout << &cc << endl;
-}
-
-void test2(Constructor &&c)
-{
+    cc.i = 10;
+    cout << cc.i << endl;
+    c.i = 100;
+    cout << cc.i << endl;
     cout << &c << endl;
-    Constructor cc = move(c);
-    cout << &cc << endl;
+    cout << &cc << endl; // ?为什么地址不一样
 }
 
 int main()
 {
     Constructor c;
-    cout << &c << endl;
-    test1(c);
-    test2(move(c));
-    cout << &c << endl;
-
-    cout << is_rvalue_reference<decltype(move(c))>::value << endl;
+    set(c);
 }

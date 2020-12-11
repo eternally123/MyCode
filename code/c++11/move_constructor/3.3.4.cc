@@ -17,10 +17,8 @@ public:
     ~Constructor() { cout << "~constructor\n"; }
     Constructor(Constructor &mc) { cout << "copy constructor\n"; }
     Constructor(const Constructor &mc) { cout << "copy constructor\n"; }
-    Constructor(Constructor &&mc) : num(mc.num), p(mc.p), t(move(mc.t)) { cout << "move constructor\n"; }
-    // Constructor(const Constructor &&mc) : num(mc.num), p(mc.p), t(move(mc.t)) { cout << "move constructor\n"; }
+    // Constructor(Constructor &&mc) : num(mc.num), p(mc.p), t(move(mc.t)) { cout << "move constructor\n"; }
     // Constructor(Constructor &&) = delete;
-    // Constructor(const Constructor &&) = delete;
 
     void print() { cout << "print\n"; }
     int num;

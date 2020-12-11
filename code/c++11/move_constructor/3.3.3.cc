@@ -19,14 +19,7 @@ public:
         cout << "move constructor\n";
         num++;
     }
-    Constructor(const Constructor &&mc)
-        : num(mc.num)
-    {
-        cout << "move constructor\n";
-        num++;
-    }
     // Constructor(Constructor &&) = delete;
-    // Constructor(const Constructor &&) = delete;
 
     void print() { cout << "print\n"; }
     int num;
