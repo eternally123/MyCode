@@ -1,0 +1,5 @@
+# ---------------------learning note---------------------------
+#                     activation function:
+#   regression:     none/logistic/relu...
+#   classification:     softmax
+# -------------------------------------------------------------

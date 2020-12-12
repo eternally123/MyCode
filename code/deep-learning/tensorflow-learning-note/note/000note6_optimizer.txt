@@ -1,0 +1,6 @@
+# ---------------------learning note---------------------------
+#                         optimizer:
+#   regression:      train_step = tf.train.GradientDescentOptimizer(learning_rate=0.1).minimize(loss=loss)
+#   classification:     train_step = tf.train.GradientDescentOptimizer(learning_rate=0.5).minimize(loss=cross_entropy)
+#                   AdamOptimizer
+# -------------------------------------------------------------
