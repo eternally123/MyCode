@@ -1,7 +1,0 @@
-# ---------------------learning note---------------------------
-#                         loss function:
-#   regression:     loss = tf.reduce_mean(tf.reduce_sum(tf.square(ys - prediction),
-#                                    reduction_indices=[1])) #均方差
-#   classification:     cross_entropy = tf.reduce_mean(-tf.reduce_sum(ys * tf.log(prediction),
-#                                              reduction_indices=[1]))  # 交叉熵
-# -------------------------------------------------------------

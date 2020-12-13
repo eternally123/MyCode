@@ -1,7 +1,0 @@
-# ---------------------learning note---------------------------
-#   将tensorflow神经网络图画出来：tf.name_scope() 与 tf.summary.FileWriter
-#       1.画每一部分：input、layer、loss、train，用tf.name_scope('input')...来画
-#       2.每一部分的内部结构也用tf.name_scope()画，可以递归画出
-#   note：声明变量时的name可以自己看一下具体体现在哪里。如tf.placeholder tf.Variable等等
-# -------------------------------------------------------------
-
