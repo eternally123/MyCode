@@ -44,11 +44,13 @@ public:
     int join(void **return_value) const;
     int detach();
     const ThreadID &getID() const;
+    // void pushCleanupFunc(void (*return_func)(void *), void *arg);
 
 protected:
+    virtual void run() = 0;
     void yield();
     void sleep(unsigned int seconds, unsigned int useconds); // 类型是否平台无关？
-    virtual void run() = 0;
+    // void popCleanupFunc(int execute);
 
 private:
     static void *startHook(void *arg);
