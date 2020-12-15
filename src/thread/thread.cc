@@ -186,7 +186,7 @@ void Thread::yield()
     }
 }
 
-void Thread::sleep(unsigned int seconds, unsigned int useconds)
+void Thread::sleep(int64_t seconds, int64_t useconds)
 {
     timespec ts;
     memset(&ts, 0, sizeof(timespec));
@@ -196,8 +196,4 @@ void Thread::sleep(unsigned int seconds, unsigned int useconds)
     if (ret < 0)
     {
     }
-}
-
-int main()
-{
 }

@@ -49,7 +49,7 @@ public:
 protected:
     virtual void run() = 0;
     void yield();
-    void sleep(unsigned int seconds, unsigned int useconds); // 类型是否平台无关？
+    void sleep(int64_t seconds, int64_t useconds); // 类型是否平台无关？
     // void popCleanupFunc(int execute);
 
 private:
