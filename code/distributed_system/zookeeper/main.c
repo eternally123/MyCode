@@ -116,12 +116,13 @@ int main(int argc, const char *argv[])
         exit(EXIT_FAILURE);
     }
 
-    char str[] = "/xyz30000000014";
+    char str[] = "/xyz3";
     wexists(zkhandle, str);
     printf("---------------\n");
     create(zkhandle, str);
     get(zkhandle);
     getChildren(zkhandle, str);
     getACL(zkhandle, str);
+    // sleep(10);
     delete (zkhandle, str);
 }
