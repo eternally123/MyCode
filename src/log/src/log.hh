@@ -5,6 +5,8 @@
 
 #include "logger.hh"
 
+class LoggerFactory;
+
 #define TRACE_LOG(_fmt_, args...) LoggerFactory::getInstance()->getRootLogger()->trace(_fmt_, ##args)
 
 #define DEBUG_LOG(_fmt_, args...) LoggerFactory::getInstance()->getRootLogger()->debug(__FILE__, __LINE__, __FUNCTION__, _fmt_, ##args)
