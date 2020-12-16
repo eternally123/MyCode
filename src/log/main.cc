@@ -8,5 +8,7 @@ int main()
 {
     int i = 10;
     std::string str = "my log class";
-    INFO_LOG("helloworld %s \n", str.c_str());
+    INFO_LOG("helloworld %s", str.c_str());
+    ERROR_LOG("helloworld %s", str.c_str());
+    FATAL_LOG("helloworld %s", str.c_str());
 }

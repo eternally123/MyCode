@@ -6,21 +6,33 @@
 
 #include "appender.hh"
 
+Appender::Appender()
+{
+}
+
+Appender::~Appender()
+{
+}
+
+void Appender::destroy()
+{
+}
+
 std::string Appender::getTimeNow() const
 {
     time_t t;
-    time_t rt = time(&t); // get now time
+    time_t rt = time(&t);
     if (rt < 0)
     {
     }
 
-    struct tm pt; // parsed time
+    struct tm pt;
     struct tm *rttm = localtime_r(&t, &pt);
     if (rttm == NULL)
     {
     }
 
-    char time_str[30]; // time has format 2011-04-24 15:04:22
+    char time_str[30]; // 时间格式2011-04-24 15:04:22
     int rtpr = snprintf(
         time_str,
         30,
@@ -40,7 +52,7 @@ std::string Appender::getTimeNow() const
 
 std::string Appender::getLogLevelString(LogLevel level) const
 {
-    return std::string("[") + std::string(LOG_LEVEL_STR[level]) + "]";
+    return std::string("[") + LogLevelString::getLogLevelStr(level) + "]";
 }
 
 std::string Appender::getPID() const
@@ -64,15 +76,4 @@ std::string Appender::getTID() const
 std::string Appender::getPIDAndTID() const
 {
     return std::string("[") + getPID() + ":" + getTID() + "]";
-}
-
-void Appender::log(
-    std::string,
-    LogLevel,
-    const char *,
-    va_list,
-    const char *,
-    int,
-    const char *)
-{
 }

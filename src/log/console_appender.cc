@@ -4,9 +4,8 @@
 
 #include "console_appender.hh"
 
-const uint32_t LOG_BUFFER_SIZE = 6000;
-
 ConsoleAppender::ConsoleAppender()
+    : logbuffersize_(1000)
 {
 }
 
@@ -23,10 +22,10 @@ void ConsoleAppender::log(
     int linenum,
     const char *function)
 {
-    char buffer[LOG_BUFFER_SIZE];
+    char buffer[logbuffersize_];
 
-    // time, levle and logger name
-    int rt = snprintf(buffer, LOG_BUFFER_SIZE, "%s %s %s ",
+    // 时间、日志级别、进程ID线程ID
+    int rt = snprintf(buffer, logbuffersize_, "%s %s %s ",
                       getTimeNow().c_str(),
                       getLogLevelString(level).c_str(),
                       getPIDAndTID().c_str());
@@ -34,12 +33,12 @@ void ConsoleAppender::log(
     {
     }
 
-    // log debug info
+    // 调试日志
     size_t len = strlen(buffer);
 
-    if (level == LOG_L_DEBUG && filename != NULL && linenum != 0 && function != NULL)
+    if (level == LogLevel::LOG_L_DEBUG && filename != NULL && linenum != 0 && function != NULL)
     {
-        rt = snprintf(buffer + len, LOG_BUFFER_SIZE - len,
+        rt = snprintf(buffer + len, logbuffersize_ - len,
                       "(FILE:%s, LINE:%d, FUNC:%s) : ",
                       filename, linenum, function);
         if (rt < 0)
@@ -47,9 +46,9 @@ void ConsoleAppender::log(
         }
     }
 
-    // log data
+    // 其他日志
     len = strlen(buffer);
-    rt = vsnprintf(buffer + len, LOG_BUFFER_SIZE - len, fmt, ap);
+    rt = vsnprintf(buffer + len, logbuffersize_ - len, fmt, ap);
     if (rt < 0)
     {
     }
@@ -57,14 +56,7 @@ void ConsoleAppender::log(
     len = strlen(buffer);
     // 添加换行
     buffer[len++] = '\n';
-    buffer[len] = '\0';
-
-    // 去掉多余的空行
-    while (len >= 2 && buffer[len - 2] == '\n')
-    {
-        --len;
-    }
-    buffer[len] = '\0';
+    buffer[len++] = '\0';
 
     // 输出到stderr
     fprintf(stderr, "%s", buffer);

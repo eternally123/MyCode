@@ -17,4 +17,7 @@ public:
         const char *filename = NULL,
         int linenum = 0,
         const char *function = NULL);
+
+private:
+    uint32_t logbuffersize_;
 };

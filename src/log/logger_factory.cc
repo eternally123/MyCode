@@ -6,23 +6,22 @@
 #include "console_appender.hh"
 #include "syslog_appender.hh"
 
-// logger map
 std::map<std::string, Logger *> LoggerFactory::loggerMap_;
 
 LoggerFactory::LoggerFactory()
 {
-    // init ROOT Logger
+    // 初始化root logger
     Logger *rootLogger = new Logger();
     rootLogger->setName("ROOT");
 #ifdef DEBUG
-    rootLogger->setLevel(LOG_L_DEBUG);
+    rootLogger->setLevel(LogLevel::LOG_L_DEBUG);
 #else
-    rootLogger->setLevel(LOG_L_INFO);
+    rootLogger->setLevel(LogLevel::LOG_L_INFO);
 #endif
 
-    Appender *p_Appender;
-    p_Appender = new ConsoleAppender();
-    if (p_Appender->init() != 0)
+    // 默认添加控制台日志输出
+    Appender *p_Appender = new ConsoleAppender();
+    if (0 != p_Appender->init())
     {
         fprintf(
             stderr,
@@ -31,11 +30,8 @@ LoggerFactory::LoggerFactory()
     }
     rootLogger->addAppender(p_Appender);
 
-    std::pair<std::map<std::string, Logger *>::iterator, bool> logpair =
-        loggerMap_.insert(
-            std::pair<std::string, Logger *>(
-                "ROOT", rootLogger));
-    if (!logpair.second)
+    auto resultpair = loggerMap_.insert(std::pair<std::string, Logger *>("ROOT", rootLogger));
+    if (false == resultpair.second)
     {
     }
 }
@@ -53,9 +49,7 @@ void LoggerFactory::clear()
 {
     if (!loggerMap_.empty())
     {
-        for (std::map<std::string, Logger *>::iterator it = loggerMap_.begin();
-             it != loggerMap_.end();
-             ++it)
+        for (auto it = loggerMap_.begin(); it != loggerMap_.end(); ++it)
         {
             delete it->second;
             it->second = NULL;

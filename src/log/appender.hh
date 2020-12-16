@@ -11,12 +11,12 @@
 class Appender : public noncopyable
 {
 public:
-    virtual ~Appender(){};
-    virtual int init()
-    {
-        return SUCCESSFUL;
-    }
+    Appender();
+    virtual ~Appender();
 
+public:
+    virtual inline int init();
+    virtual void destroy();
     virtual void log(
         std::string loggerName,
         LogLevel level,
@@ -26,8 +26,6 @@ public:
         int linenum = 0,
         const char *function = NULL) = 0;
 
-    virtual void destroy() {}
-
 protected:
     std::string getTimeNow() const;
     std::string getPID() const;
@@ -35,3 +33,8 @@ protected:
     std::string getPIDAndTID() const;
     std::string getLogLevelString(LogLevel level) const;
 };
+
+int Appender::init()
+{
+    return SUCCESSFUL;
+}

@@ -7,9 +7,9 @@ class ConsoleAppender : public Appender
 {
 public:
     ConsoleAppender();
-    ~ConsoleAppender();
+    virtual ~ConsoleAppender();
 
-    void log(
+    virtual void log(
         std::string loggerName,
         LogLevel level,
         const char *fmt,
@@ -17,4 +17,7 @@ public:
         const char *filename = NULL,
         int linenum = 0,
         const char *function = NULL);
+
+private:
+    uint32_t logbuffersize_;
 };

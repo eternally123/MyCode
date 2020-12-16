@@ -14,7 +14,7 @@ class Logger : public noncopyable
     friend class LoggerFactory;
 
 public:
-    void perf(const char *fmt, ...);
+    void perf(const char *fmt, ...); // 性能日志
     void fatal(const char *fmt, ...);
     void error(const char *fmt, ...);
     void warn(const char *fmt, ...);
@@ -24,14 +24,18 @@ public:
         int linenum,
         const char *function,
         const char *fmt, ...);
-    void trace(const char *fmt, ...);
+    void trace(const char *fmt, ...); // 跟踪日志
 
 private:
-    Logger(); // can't new
+    Logger();
     virtual ~Logger();
+
+private:
     void setLevel(LogLevel level);
-    void addAppender(Appender *apdr);
     void setName(const std::string &name);
+
+private:
+    void addAppender(Appender *apdr);
     void doLog(
         LogLevel level,
         const char *fmt,
@@ -41,7 +45,7 @@ private:
         const char *function = NULL);
 
 private:
+    std::string name_;                   // Logger name
     LogLevel level_;                     // log level
     std::list<Appender *> appenderList_; // list of Appenders
-    std::string name_;                   // Logger name
 };

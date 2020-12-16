@@ -7,9 +7,8 @@
 
 #include "syslog_appender.hh"
 
-const uint32_t LOG_BUFFER_SIZE = 6000;
-
-SyslogAppender::SyslogAppender() : Appender()
+SyslogAppender::SyslogAppender()
+    : logbuffersize_(1000)
 {
 }
 
@@ -33,18 +32,33 @@ void SyslogAppender::log(
     int linenum,
     const char *function)
 {
-    char buffer[LOG_BUFFER_SIZE] = "";
+    char buffer[logbuffersize_];
 
-    // time, levle and logger name
-    int rt = snprintf(buffer, LOG_BUFFER_SIZE, "%s - ",
-                      loggerName.c_str());
+    // 时间、日志级别、进程ID线程ID
+    int rt = snprintf(buffer, logbuffersize_, "%s %s %s ",
+                      getTimeNow().c_str(),
+                      getLogLevelString(level).c_str(),
+                      getPIDAndTID().c_str());
     if (rt < 0)
     {
     }
 
-    // log data
+    // 调试日志
     size_t len = strlen(buffer);
-    rt = vsnprintf(buffer + len, LOG_BUFFER_SIZE - len, fmt, ap);
+
+    if (level == LogLevel::LOG_L_DEBUG && filename != NULL && linenum != 0 && function != NULL)
+    {
+        rt = snprintf(buffer + len, logbuffersize_ - len,
+                      "(FILE:%s, LINE:%d, FUNC:%s) : ",
+                      filename, linenum, function);
+        if (rt < 0)
+        {
+        }
+    }
+
+    // 其他日志
+    len = strlen(buffer);
+    rt = vsnprintf(buffer + len, logbuffersize_ - len, fmt, ap);
     if (rt < 0)
     {
     }
@@ -52,51 +66,27 @@ void SyslogAppender::log(
     len = strlen(buffer);
     // 添加换行
     buffer[len++] = '\n';
-    buffer[len] = '\0';
-    if (level == LOG_L_DEBUG && filename != NULL && linenum != 0 && function != NULL)
-    {
-        // 去掉换行
-        while (buffer[len - 2] == '\n' && len > 2)
-        {
-            --len;
-        }
-        buffer[len] = '\0';
-
-        rt = snprintf(buffer + len, LOG_BUFFER_SIZE - len,
-                      " (IN FILE: %s, LINE: %d, FUNCTION: %s)\n",
-                      filename, linenum, function);
-        if (rt < 0)
-        {
-        }
-    }
-
-    len = strlen(buffer);
-    // 去掉多余的空行
-    while (buffer[len - 2] == '\n' && len > 2)
-    {
-        --len;
-    }
-    buffer[len] = '\0';
+    buffer[len++] = '\0';
 
     switch (level)
     {
-    case LOG_L_TRACE:
-    case LOG_L_DEBUG:
+    case LogLevel::LOG_L_TRACE:
+    case LogLevel::LOG_L_DEBUG:
         ::syslog(LOG_USER | LOG_DEBUG, "%s", buffer);
         break;
-    case LOG_L_INFO:
+    case LogLevel::LOG_L_INFO:
         ::syslog(LOG_USER | LOG_INFO, "%s", buffer);
         break;
-    case LOG_L_WARN:
+    case LogLevel::LOG_L_WARN:
         ::syslog(LOG_USER | LOG_WARNING, "%s", buffer);
         break;
-    case LOG_L_ERROR:
+    case LogLevel::LOG_L_ERROR:
         ::syslog(LOG_USER | LOG_ERR, "%s", buffer);
         break;
-    case LOG_L_FATAL:
+    case LogLevel::LOG_L_FATAL:
         ::syslog(LOG_USER | LOG_EMERG, "%s", buffer);
         break;
-    case LOG_L_PERF:
+    case LogLevel::LOG_L_PERF:
         ::syslog(LOG_LOCAL0 | LOG_INFO, "%s", buffer);
         break;
     default:
