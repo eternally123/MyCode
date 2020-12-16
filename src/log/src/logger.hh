@@ -4,6 +4,8 @@
 #include <stdarg.h>
 #include <list>
 
+#include <string>
+
 #include "noncopyable.hh"
 #include "logger_factory.hh"
 

@@ -8,9 +8,7 @@ add_library(log SHARED ${SOURCE_FILES}) # 最终生动态链接库
 add_library(log_static STATIC ${SOURCE_FILES}) # 最终生成静态链接库
 set_target_properties(log_static PROPERTIES OUTPUT_NAME "log")
 
-set(head_files
-    src/log.hh
-)
+file(GLOB head_files ${CMAKE_SOURCE_DIR}/src/*.hh)
 
 install(FILES  ${head_files} DESTINATION  ${CMAKE_SOURCE_DIR}/install/include)
 install(TARGETS log DESTINATION  ${CMAKE_SOURCE_DIR}/install/lib)

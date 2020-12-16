@@ -56,7 +56,7 @@ void ConsoleAppender::log(
     len = strlen(buffer);
     // 添加换行
     buffer[len++] = '\n';
-    buffer[len++] = '\0';
+    buffer[len] = '\0';
 
     // 输出到stderr
     fprintf(stderr, "%s", buffer);
