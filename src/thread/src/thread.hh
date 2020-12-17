@@ -1,5 +1,7 @@
 #pragma once
 
+#include "class_constructor.hh"
+
 #include <pthread.h>
 #include <sys/types.h>
 
@@ -30,12 +32,10 @@ private:
         支持detach、join、
         支持sleep、yield
 */
-class Thread
+class Thread : public nocopyable, public nomoveable
 {
 public:
     Thread();
-    Thread(const Thread &thread) = delete;
-    Thread(Thread &&thread) = delete;
     virtual ~Thread();
 
 public:
