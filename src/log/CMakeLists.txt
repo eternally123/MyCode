@@ -10,6 +10,6 @@ set_target_properties(log_static PROPERTIES OUTPUT_NAME "log")
 
 file(GLOB head_files ${CMAKE_SOURCE_DIR}/src/*.hh)
 
-install(FILES  ${head_files} DESTINATION  ${CMAKE_SOURCE_DIR}/install/include)
+install(FILES  ${head_files} DESTINATION  ${CMAKE_SOURCE_DIR}/install/include/log)
 install(TARGETS log DESTINATION  ${CMAKE_SOURCE_DIR}/install/lib)
 install(TARGETS log_static DESTINATION  ${CMAKE_SOURCE_DIR}/install/lib)

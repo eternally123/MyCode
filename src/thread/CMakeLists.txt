@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 2.8)
 project(thread)
 
+include_directories(${CMAKE_SOURCE_DIR}/third_party/log/include)
+
 set(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/build/lib) #设置生成库文件位置在/build/lib
 aux_source_directory(${CMAKE_SOURCE_DIR}/src SOURCE_FILES)
 
