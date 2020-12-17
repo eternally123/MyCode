@@ -9,6 +9,7 @@ public:
     ConsoleAppender();
     virtual ~ConsoleAppender();
 
+public:
     virtual void log(
         std::string loggerName,
         LogLevel level,

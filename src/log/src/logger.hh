@@ -15,6 +15,12 @@ class Logger
     friend class LoggerFactory;
 
 public:
+    Logger(const Logger &logger) = delete;
+    Logger &operator=(const Logger &logger) = delete;
+    Logger(Logger &&logger) = delete;
+    Logger &operator=(Logger &&logger) = delete;
+
+public:
     void perf(const char *fmt, ...); // 性能日志
     void fatal(const char *fmt, ...);
     void error(const char *fmt, ...);
@@ -30,8 +36,6 @@ public:
 private:
     Logger();
     virtual ~Logger();
-    Logger(const Logger &logger) = delete;
-    Logger(Logger &&logger) = delete;
 
 private:
     void setLevel(LogLevel level);
