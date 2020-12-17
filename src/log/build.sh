@@ -1,11 +1,11 @@
 #!/bin/bash
 
 # 获取脚本路径
-EXEC_PATH=$(
+build_dir=$(
     cd "$(dirname "$0")"
     pwd
 )
-cd ${EXEC_PATH}
+cd ${build_dir}
 mkdir -p build
 cd build
 cmake ..
