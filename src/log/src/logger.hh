@@ -7,18 +7,13 @@
 #include <string>
 
 #include "logger_factory.hh"
+#include "class_constructor.hh"
 
 class Appender;
 
-class Logger
+class Logger : public nocopyable, public nomoveable
 {
     friend class LoggerFactory;
-
-public:
-    Logger(const Logger &logger) = delete;
-    Logger &operator=(const Logger &logger) = delete;
-    Logger(Logger &&logger) = delete;
-    Logger &operator=(Logger &&logger) = delete;
 
 public:
     void perf(const char *fmt, ...); // 性能日志

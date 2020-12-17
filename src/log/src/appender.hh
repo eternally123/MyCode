@@ -6,16 +6,13 @@
 
 #include "loglevel.hh"
 #include "error.hh"
+#include "class_constructor.hh"
 
-class Appender
+class Appender : public nocopyable, public nomoveable
 {
 public:
     Appender();
     virtual ~Appender();
-    Appender(const Appender &appender) = delete;
-    Appender &operator=(const Appender &appender) = delete;
-    Appender(Appender &&appender) = delete;
-    Appender &operator=(Appender &&appender) = delete;
 
 public:
     virtual inline int init();

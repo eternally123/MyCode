@@ -3,23 +3,21 @@
 using namespace std;
 class noncopyable
 {
-    friend class A;
-
 protected:
     noncopyable() {}
     virtual ~noncopyable() {}
 
-private:
+public:
     // don't define these members
-    noncopyable(const noncopyable &nc);
-    noncopyable &operator=(const noncopyable &nc);
+    noncopyable(const noncopyable &nc) = delete;
+    noncopyable &operator=(const noncopyable &nc) = delete;
 };
 
 class A : public noncopyable
 {
 public:
     A(){};
-    A(const A &a) = default;
+    // A(const A &a) = default;
 };
 
 class T
@@ -44,7 +42,7 @@ int main()
     // M n = m;
 
     A a;
-    A b = a;
+    // A b = a;
 }
 
 // $ ./a.out
