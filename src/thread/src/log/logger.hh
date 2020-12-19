@@ -7,7 +7,7 @@
 #include <string>
 
 #include "logger_factory.hh"
-#include "class_constructor.hh"
+#include "utils/class_constructor.hh"
 
 class Appender;
 

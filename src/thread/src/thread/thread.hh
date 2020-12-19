@@ -1,6 +1,6 @@
 #pragma once
 
-#include "class_constructor.hh"
+#include "utils/class_constructor.hh"
 
 #include <pthread.h>
 #include <sys/types.h>

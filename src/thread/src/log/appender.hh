@@ -6,7 +6,7 @@
 
 #include "loglevel.hh"
 #include "error.hh"
-#include "class_constructor.hh"
+#include "utils/class_constructor.hh"
 
 class Appender : public nocopyable, public nomoveable
 {

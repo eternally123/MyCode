@@ -1,5 +1,5 @@
 #pragma once
-#include "class_constructor.hh"
+#include "utils/class_constructor.hh"
 #include "mutex.hh"
 
 #include <memory>
