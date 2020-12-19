@@ -1,4 +1,4 @@
-#include "thread.hh"
+#include "thread/thread.hh"
 #include "log/log.hh"
 
 #include <unistd.h>
