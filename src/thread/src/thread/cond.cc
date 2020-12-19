@@ -1,5 +1,5 @@
-#include "cond.hh"
-#include "log/log.hh"
+#include "thread/cond.hh"
+#include "thread/log/log.hh"
 
 Cond::Cond(MutexPtr mutex)
     : mutex_(mutex)

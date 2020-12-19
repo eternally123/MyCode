@@ -1,29 +1,19 @@
-
-#include <string.h>
-#include <syslog.h>
-#include <stdio.h>
-#include <iostream>
+#include <cstdio>
+#include <cstring>
 #include <inttypes.h>
 
-#include "syslog_appender.hh"
+#include "thread/log/console_appender.hh"
 
-SyslogAppender::SyslogAppender()
+ConsoleAppender::ConsoleAppender()
     : logbuffersize_(1000)
 {
 }
 
-SyslogAppender::~SyslogAppender()
+ConsoleAppender::~ConsoleAppender()
 {
-    closelog();
 }
 
-int SyslogAppender::init()
-{
-    openlog(NULL, LOG_PID, LOG_USER);
-    return SUCCESSFUL;
-}
-
-void SyslogAppender::log(
+void ConsoleAppender::log(
     std::string loggerName,
     LogLevel level,
     const char *fmt,
@@ -66,32 +56,8 @@ void SyslogAppender::log(
     len = strlen(buffer);
     // 添加换行
     buffer[len++] = '\n';
-    buffer[len++] = '\0';
+    buffer[len] = '\0';
 
-    switch (level)
-    {
-    case LogLevel::LOG_L_TRACE:
-    case LogLevel::LOG_L_DEBUG:
-        ::syslog(LOG_USER | LOG_DEBUG, "%s", buffer);
-        break;
-    case LogLevel::LOG_L_INFO:
-        ::syslog(LOG_USER | LOG_INFO, "%s", buffer);
-        break;
-    case LogLevel::LOG_L_WARN:
-        ::syslog(LOG_USER | LOG_WARNING, "%s", buffer);
-        break;
-    case LogLevel::LOG_L_ERROR:
-        ::syslog(LOG_USER | LOG_ERR, "%s", buffer);
-        break;
-    case LogLevel::LOG_L_FATAL:
-        ::syslog(LOG_USER | LOG_EMERG, "%s", buffer);
-        break;
-    case LogLevel::LOG_L_PERF:
-        ::syslog(LOG_LOCAL0 | LOG_INFO, "%s", buffer);
-        break;
-    default:
-        std::cerr << "UNKNOWN LOG LEVEL" << std::endl;
-        break;
-    }
-    return;
+    // 输出到stderr
+    fprintf(stderr, "%s", buffer);
 }

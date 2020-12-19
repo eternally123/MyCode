@@ -2,9 +2,9 @@
 #include <cstdlib>
 #include <utility>
 
-#include "logger.hh"
-#include "console_appender.hh"
-#include "syslog_appender.hh"
+#include "thread/log/logger.hh"
+#include "thread/log/console_appender.hh"
+#include "thread/log/syslog_appender.hh"
 
 std::map<std::string, Logger *> LoggerFactory::loggerMap_;
 

@@ -1,5 +1,5 @@
 #pragma once
-#include "utils/class_constructor.hh"
+#include "thread/utils/class_constructor.hh"
 
 #include <pthread.h>
 

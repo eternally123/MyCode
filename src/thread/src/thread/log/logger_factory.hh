@@ -3,8 +3,8 @@
 #include <map>
 #include <string>
 
-#include "singleton.hh"
-#include "loglevel.hh"
+#include "thread/utils/singleton.hh"
+#include "thread/log/loglevel.hh"
 
 class Logger;
 

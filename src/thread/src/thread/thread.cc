@@ -1,5 +1,5 @@
-#include "thread.hh"
-#include "types.hh"
+#include "thread/thread.hh"
+#include "thread/types.hh"
 
 #include <climits>
 #include <ctime>

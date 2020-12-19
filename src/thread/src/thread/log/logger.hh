@@ -6,8 +6,8 @@
 
 #include <string>
 
-#include "logger_factory.hh"
-#include "utils/class_constructor.hh"
+#include "thread/log/logger_factory.hh"
+#include "thread/utils/class_constructor.hh"
 
 class Appender;
 

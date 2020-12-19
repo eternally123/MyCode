@@ -3,12 +3,12 @@
 set(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/build/lib) 
 
 # 项目头文件位置
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 # ==========================编译文件============================
 # 项目源文件
-aux_source_directory(utils UTILS_SRC)
+aux_source_directory(thread/utils UTILS_SRC)
 aux_source_directory(thread THREAD_SRC)
-aux_source_directory(log LOG_SRC)
+aux_source_directory(thread/log LOG_SRC)
 set(SOURCE_FILES ${UTILS_SRC} ${THREAD_SRC} ${LOG_SRC})
 
 
@@ -21,11 +21,11 @@ set_target_properties(thread_static PROPERTIES OUTPUT_NAME "thread")
 
 
 # 头文件安装
-file(GLOB head_files ${CMAKE_SOURCE_DIR}/src/log/*.hh)
+file(GLOB head_files ${CMAKE_SOURCE_DIR}/src/thread/log/*.hh)
 install(FILES  ${head_files} DESTINATION  ${CMAKE_SOURCE_DIR}/install/include/thread/log)
 file(GLOB head_files ${CMAKE_SOURCE_DIR}/src/thread/*.hh)
-install(FILES  ${head_files} DESTINATION  ${CMAKE_SOURCE_DIR}/install/include/thread/thread)
-file(GLOB head_files ${CMAKE_SOURCE_DIR}/src/utils/*.hh)
+install(FILES  ${head_files} DESTINATION  ${CMAKE_SOURCE_DIR}/install/include/thread)
+file(GLOB head_files ${CMAKE_SOURCE_DIR}/src/thread/utils/*.hh)
 install(FILES  ${head_files} DESTINATION  ${CMAKE_SOURCE_DIR}/install/include/thread/utils)
 
 # 库安装

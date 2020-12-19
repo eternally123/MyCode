@@ -1,5 +1,5 @@
-#include "mutex.hh"
-#include "log/log.hh"
+#include "thread/mutex.hh"
+#include "thread/log/log.hh"
 
 Mutex::Mutex()
 {

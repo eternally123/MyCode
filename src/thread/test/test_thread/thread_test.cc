@@ -1,5 +1,5 @@
 #include "thread/thread.hh"
-#include "log/log.hh"
+#include "thread/log/log.hh"
 
 #include <unistd.h>
 
@@ -10,7 +10,7 @@ class IOThread : public Thread
 public:
     virtual void run()
     {
-        std::cout << "thread run\n";
+        INFO_LOG("thread run...");
     }
 };
 

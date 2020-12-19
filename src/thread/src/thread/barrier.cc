@@ -1,5 +1,5 @@
-#include "barrier.hh"
-#include "log/log.hh"
+#include "thread/barrier.hh"
+#include "thread/log/log.hh"
 
 Barrier::Barrier(int count)
 {

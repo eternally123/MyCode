@@ -4,9 +4,9 @@
 #include <stdarg.h>
 #include <string>
 
-#include "loglevel.hh"
-#include "error.hh"
-#include "utils/class_constructor.hh"
+#include "thread/log/loglevel.hh"
+#include "thread/log/error.hh"
+#include "thread/utils/class_constructor.hh"
 
 class Appender : public nocopyable, public nomoveable
 {

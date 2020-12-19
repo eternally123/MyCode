@@ -1,6 +1,6 @@
-#include "spin.hh"
+#include "thread/spin.hh"
 
-#include "log/log.hh"
+#include "thread/log/log.hh"
 
 Spin::Spin()
 {

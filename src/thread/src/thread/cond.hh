@@ -1,6 +1,6 @@
 #pragma once
-#include "utils/class_constructor.hh"
-#include "mutex.hh"
+#include "thread/utils/class_constructor.hh"
+#include "thread/mutex.hh"
 
 #include <memory>
 

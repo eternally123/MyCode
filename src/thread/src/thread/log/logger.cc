@@ -1,7 +1,7 @@
 #include <cstdarg>
 
-#include "appender.hh"
-#include "logger.hh"
+#include "thread/log/appender.hh"
+#include "thread/log/logger.hh"
 
 Logger::Logger()
     : level_(LogLevel::LOG_L_DEBUG)

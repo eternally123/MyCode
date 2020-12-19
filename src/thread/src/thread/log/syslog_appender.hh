@@ -1,16 +1,15 @@
 #pragma once
-#include <cstdarg>
+#include "thread/log/appender.hh"
 
-#include "appender.hh"
-
-class ConsoleAppender : public Appender
+class SyslogAppender : public Appender
 {
 public:
-    ConsoleAppender();
-    virtual ~ConsoleAppender();
+    SyslogAppender();
+    ~SyslogAppender();
 
 public:
-    virtual void log(
+    int init(void);
+    void log(
         std::string loggerName,
         LogLevel level,
         const char *fmt,

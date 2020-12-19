@@ -1,5 +1,5 @@
-#include "rwlock.hh"
-#include "log/log.hh"
+#include "thread/rwlock.hh"
+#include "thread/log/log.hh"
 
 RWLock::RWLock()
 {

@@ -3,7 +3,7 @@
 #include <cstring>
 #include <cerrno>
 
-#include "logger.hh"
+#include "thread/log/logger.hh"
 
 #define TRACE_LOG(_fmt_, args...) LoggerFactory::getInstance()->getRootLogger()->trace(_fmt_, ##args)
 

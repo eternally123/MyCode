@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <pthread.h>
 
-#include "appender.hh"
+#include "thread/log/appender.hh"
 
 Appender::Appender()
 {
