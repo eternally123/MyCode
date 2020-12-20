@@ -1,5 +1,6 @@
 #include "thread/thread.hh"
 #include "thread/types.hh"
+#include "thread/log/log.hh"
 
 #include <climits>
 #include <ctime>
@@ -61,7 +62,7 @@ Thread::~Thread()
     }
     catch (...)
     {
-        std::cout << "System call error: pthread_cancel." << std::endl;
+        ERROR_LOG("System call error: pthread_cancel.");
     }
 }
 
@@ -69,7 +70,7 @@ int Thread::start(int stack_size)
 {
     if (running_)
     {
-        std::cout << "Try to start an already started thread." << std::endl;
+        WARN_LOG("Try to start an already started thread.");
         return FAILED;
     }
 
@@ -80,7 +81,7 @@ int Thread::start(int stack_size)
         int ret = pthread_attr_init(&attr);
         if (0 != ret)
         {
-            std::cout << "System call error: pthread_attr_init." << std::endl;
+            ERROR_LOG("System call error: pthread_attr_init.");
             return FAILED;
         }
 
@@ -92,14 +93,14 @@ int Thread::start(int stack_size)
         ret = pthread_attr_setstacksize(&attr, stack_size);
         if (0 != ret)
         {
-            std::cout << "System call error: pthread_attr_setstacksize." << std::endl;
+            ERROR_LOG("System call error: pthread_attr_setstacksize.");
             return FAILED;
         }
 
         ret = pthread_create(&tid, nullptr, startHook, this);
         if (0 != ret)
         {
-            std::cout << "System call error: pthread_create." << std::endl;
+            ERROR_LOG("System call error: pthread_create.");
             return FAILED;
         }
     }
@@ -108,7 +109,7 @@ int Thread::start(int stack_size)
         int ret = pthread_create(&tid, nullptr, startHook, this);
         if (0 != ret)
         {
-            std::cout << "System call error: pthread_create." << std::endl;
+            ERROR_LOG("System call error: pthread_create.");
             return FAILED;
         }
     }
@@ -152,7 +153,7 @@ int Thread::join(void **return_value) const
     int ret = pthread_join(threadId_.getID(), return_value);
     if (0 != ret)
     {
-        std::cout << "System call error: pthread_join." << std::endl;
+        ERROR_LOG("System call error: pthread_join.");
         return FAILED;
     }
 
@@ -169,7 +170,7 @@ int Thread::detach()
     int ret = pthread_detach(threadId_.getID());
     if (0 != ret)
     {
-        std::cout << "System call error: pthread_detach." << std::endl;
+        ERROR_LOG("System call error: pthread_detach.");
         return FAILED;
     }
 
@@ -182,7 +183,7 @@ void Thread::yield()
     int ret = sched_yield();
     if (ret < 0)
     {
-        std::cout << "System call error: sched_yield." << std::endl;
+        ERROR_LOG("System call error: sched_yield.");
     }
 }
 

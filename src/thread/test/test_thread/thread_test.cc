@@ -2,6 +2,7 @@
 #include "thread/log/log.hh"
 
 #include <unistd.h>
+#include <fcntl.h>
 
 #include <iostream>
 
@@ -16,7 +17,9 @@ public:
 
 int main()
 {
-    IOThread thread;
-    thread.start();
+    IOThread *thread = new IOThread();
+    thread->start();
+    thread->detach();
     sleep(2);
+    delete thread;
 }
