@@ -1,2 +1,3 @@
 add_subdirectory(test_thread)
 add_subdirectory(test_mutex)
+add_subdirectory(test_threadpool)
