@@ -30,6 +30,7 @@ public:
 
 public:
     int start();
+    int stop();
     int addTask(BaseTask *task);
 
 private:
@@ -39,6 +40,7 @@ private:
     int read_handle_;
     int write_handle_;
     int thread_num_;
+    int status_; // 0 for stop 1 for run
     WorkThreadVec workThreadvec_;
 };
 
@@ -50,12 +52,12 @@ class BaseTask
     friend class ThreadPool;
 
 public:
+    BaseTask();
     virtual ~BaseTask();
 
 protected:
-    BaseTask(std::function<void()> f);
-    void run();
+    virtual void job(){};
 
 private:
-    std::function<void()> task_;
+    void run();
 };

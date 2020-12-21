@@ -9,12 +9,11 @@
 class Task : public BaseTask
 {
 public:
-    Task(std::function<void()> f)
-        : BaseTask(f)
+    Task()
     {
     }
 
-    static void task()
+    virtual void job()
     {
         int value = 0;
         for (int i = 1; i < 10; i++)
@@ -22,20 +21,19 @@ public:
             value = value + i;
         }
         INFO_LOG("result= %d", value);
-        std::cout << value << std::endl;
+        sleep(1);
     }
 };
 
 int main()
 {
-    ThreadPool pool;
+    ThreadPool pool(2);
     pool.start();
-    Task *t = new Task(Task::task);
+    Task *t = new Task();
     pool.addTask(t);
     pool.addTask(t);
     pool.addTask(t);
     pool.addTask(t);
     pool.addTask(t);
-    INFO_LOG("task %p", t);
     sleep(4);
 }

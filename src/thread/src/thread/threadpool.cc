@@ -5,16 +5,27 @@
 #include <unistd.h>
 
 ThreadPool::ThreadPool(int thread_num)
-    : thread_num_(thread_num)
+    : thread_num_(thread_num),
+      status_(0)
 {
 }
 
 ThreadPool::~ThreadPool()
 {
+    if (1 == status_)
+    {
+        stop();
+    }
 }
 
 int ThreadPool::start()
 {
+    if (1 == status_)
+    {
+        WARN_LOG("threadpool already start");
+        return FAILED;
+    }
+
     int ret = init();
     if (0 != ret)
     {
@@ -25,13 +36,27 @@ int ThreadPool::start()
     {
         WorkThread *wt = new WorkThread(read_handle_);
         wt->start();
-        INFO_LOG("thread run");
         workThreadvec_.push_back(wt);
     }
 
     return SUCCESS;
 }
+int ThreadPool::stop()
+{
+    if (0 == status_)
+    {
+        WARN_LOG("threadpool already stop");
+        return FAILED;
+    }
+    for (auto it : workThreadvec_)
+    {
+        delete it;
+        it = nullptr;
+    }
+    workThreadvec_.clear();
 
+    return SUCCESS;
+}
 int ThreadPool::addTask(BaseTask *task)
 {
     int ret = write(write_handle_, static_cast<void *>(&task), 8);
@@ -68,7 +93,6 @@ void ThreadPool::WorkThread::run()
     while (1)
     {
         int ret = read(readfd_, &bt, 8);
-        INFO_LOG("readfd=%d", readfd_);
         if (ret < 0)
         {
             int err = errno;
@@ -77,15 +101,13 @@ void ThreadPool::WorkThread::run()
         }
         else
         {
-            INFO_LOG("task arrive,%p", bt);
             bt->run();
-            INFO_LOG("task finish");
         }
     }
 }
 
-BaseTask::BaseTask(std::function<void()> f)
-    : task_(f)
+BaseTask::BaseTask()
+
 {
 }
 
@@ -95,5 +117,5 @@ BaseTask::~BaseTask()
 
 void BaseTask::run()
 {
-    task_();
+    this->job();
 }
