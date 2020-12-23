@@ -15,6 +15,7 @@ ThreadPool::~ThreadPool()
     if (1 == status_)
     {
         stop();
+        status_ = 0;
     }
 }
 
@@ -41,6 +42,7 @@ int ThreadPool::start()
 
     return SUCCESS;
 }
+
 int ThreadPool::stop()
 {
     if (0 == status_)
@@ -48,12 +50,14 @@ int ThreadPool::stop()
         WARN_LOG("threadpool already stop");
         return FAILED;
     }
+
     for (auto it : workThreadvec_)
     {
         delete it;
         it = nullptr;
     }
     workThreadvec_.clear();
+    status_ = 0;
 
     return SUCCESS;
 }
@@ -112,6 +116,10 @@ BaseTask::BaseTask()
 }
 
 BaseTask::~BaseTask()
+{
+}
+
+void BaseTask::job()
 {
 }
 

@@ -25,7 +25,7 @@ protected:
     using WorkThreadVec = std::vector<WorkThread *>;
 
 public:
-    ThreadPool(int thread_num = 2);
+    ThreadPool(int thread_num = 16);
     ~ThreadPool();
 
 public:
@@ -56,7 +56,7 @@ public:
     virtual ~BaseTask();
 
 protected:
-    virtual void job(){};
+    virtual void job();
 
 private:
     void run();
