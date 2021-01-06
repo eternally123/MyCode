@@ -42,4 +42,10 @@ int main()
     t2.run();
     t3.run();
     INFO_LOG("count=%d", info->count);
+
+    // Mutex mu;
+    // mu.lock();
+    // mu.unlock();
+    // mu.lock();
+    // INFO_LOG("print something");
 }
