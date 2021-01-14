@@ -35,14 +35,13 @@ public:
     {
         if (err)
             return;
-        std::cout << "read " << num << " data from connection:"
+        std::cout << "read " << num << " bytes data from connection:"
                   << sockptr->remote_endpoint().address() << ":" << sockptr->remote_endpoint().port()
                   << ".\ncontents:";
         for (int i = 0; i < vec_.size(); i++)
             std::cout << vec_[i];
         std::cout << std::endl;
 
-        sleep(1);
         read(sockptr);
     }
 
