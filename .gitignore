@@ -7,3 +7,5 @@ _install/
 *.out
 *.o
 *.obj
+*.so
+*.a
