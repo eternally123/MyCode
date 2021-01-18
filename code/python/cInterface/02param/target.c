@@ -2,6 +2,6 @@
 
 char hello_world(int num)
 {
-    printf("hello %d!!\r\n", num);
+    printf("hello %d!!\n", num);
     return (char)num + 1;
 }
