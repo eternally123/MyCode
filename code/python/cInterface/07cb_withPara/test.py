@@ -1,7 +1,8 @@
 import ctypes
 
 
-def test_callback():
+def test_callback(num):
+    print("python func", num)
     print("hello world")
     return -1
 
@@ -9,8 +10,9 @@ def test_callback():
 clib = ctypes.cdll.LoadLibrary("./libtarget.so")
 func_hello_world = clib.hello_world
 
-functype = ctypes.CFUNCTYPE(ctypes.c_int)  # 返回值int，无参数
+functype = ctypes.CFUNCTYPE(ctypes.c_int, ctypes.c_int)  # 返回值int，无参数
 c_callback_python = functype(test_callback)
+c_callback_python.argtypes
 
 func_hello_world.restype = ctypes.c_int
 func_hello_world.argtype = ctypes.CFUNCTYPE
@@ -20,5 +22,5 @@ func_hello_world(c_callback_python)
 '''
 python中调用C的函数，并为C的函数注册回调函数的简单示例
 
-当有返回值时的示例
+当有传入参数时的示例
 '''
