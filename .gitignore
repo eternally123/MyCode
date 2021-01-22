@@ -9,3 +9,8 @@ _install/
 *.obj
 *.so
 *.a
+
+# python
+*.tar.gz
+*.whl
+*.egg-info
