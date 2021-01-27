@@ -3,8 +3,11 @@
 
 void *get()
 {
-    int *num = malloc(sizeof(int));
-    *num = 10;
+    // int *num = malloc(sizeof(int));
+    // *num = 97;
+    char *num = malloc(10);
+    memset(num, 'd', 10);
+
     void *ptr = (void *)num;
     return ptr;
 }

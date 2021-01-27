@@ -12,6 +12,8 @@ def func():
 
     ret = func_get()
     print(ret)
+    a = ctypes.string_at(ret, 10)
+    print(str(a, encoding="utf-8"))
     func_print(ret)
     print(ret)
 
