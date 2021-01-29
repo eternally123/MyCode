@@ -1,5 +1,6 @@
 #include <iostream>
 #include <map>
+#include <typeinfo>
 using namespace std;
 
 class Widget
@@ -21,13 +22,13 @@ int main()
     }
     cout << "===============\n";
     {
-        auto p = pair<int, Widget>(2, Widget());
+        map<int, Widget>::value_type p = pair<int, Widget>(2, Widget());
         cout << "===============\n";
         m.insert(p);
     }
     cout << "===============\n";
     {
-        auto p = map<int, Widget>::value_type(3, Widget()); //如果这里改用一条语句，则insert时不会调用copy constructor，会调用move constructor
+        map<int, Widget>::value_type p = map<int, Widget>::value_type(3, Widget()); //如果这里改用一条语句，则insert时不会调用copy constructor，会调用move constructor
         m.insert(p);
     }
     cout << "===============\n";
