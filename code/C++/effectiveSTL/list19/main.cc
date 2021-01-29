@@ -26,10 +26,10 @@ int main()
         cout << it << " ";
     }
 
-    cout << endl;
-    auto iter = s.find(1);
-    if (iter != s.end())
-        cout << *iter << endl;
+    // cout << endl;
+    // auto iter = s.find(1);
+    // if (iter != s.end())
+    //     cout << *iter << endl;
 }
 
 /**
