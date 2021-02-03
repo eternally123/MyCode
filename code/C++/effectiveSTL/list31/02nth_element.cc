@@ -22,10 +22,15 @@ int main()
     }
     cout << endl;
 
-    nth_element(v.begin(), v.begin() + 5, v.end(), sortFunc);
+    nth_element(v.begin(), v.begin() + 4, v.end(), sortFunc);
     for (auto &it : v)
     {
         cout << it << " ";
     }
     cout << endl;
 }
+
+/**
+ * 找到第n位数，让左边的都less than，右边的都more than
+ * 是非稳定排序
+ **/

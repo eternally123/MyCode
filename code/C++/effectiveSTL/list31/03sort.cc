@@ -29,3 +29,7 @@ int main()
     }
     cout << endl;
 }
+
+/**
+ * 是非稳定排序算法，稳定的要用stable_sort
+ **/

@@ -15,14 +15,17 @@ int main()
 {
     vector<int> v;
     for (int i = 1; i < 10; i++)
+    {
         v.push_back(i);
+        v.push_back(i);
+    }
     for (auto &it : v)
     {
         cout << it << " ";
     }
     cout << endl;
 
-    partial_sort(v.begin(), v.begin() + 5, v.end(), sortFunc);
+    partial_sort(v.begin(), v.begin() + 20, v.end(), sortFunc);
     for (auto &it : v)
     {
         cout << it << " ";
