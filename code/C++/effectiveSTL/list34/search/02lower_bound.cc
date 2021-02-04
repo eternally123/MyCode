@@ -15,6 +15,6 @@ int main()
     for (int i = 1; i <= 10; i++)
         v.push_back(i);
 
-    cout << binary_search(v.begin(), v.end(), 5, Comp) << endl;  // bool true
-    cout << binary_search(v.begin(), v.end(), 20, Comp) << endl; // bool false
+    auto iter = lower_bound(v.begin(), v.end(), 5, Comp);
+    cout << *iter << endl;
 }
