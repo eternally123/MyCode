@@ -65,7 +65,7 @@ int main()
     pmyobj->printMemPoint();
 
     int MYACLS::*mypoint = &MYACLS::m_n;
-    printf("pmyobj->m_n偏移地址 = %d\n", mypoint);
+    printf("pmyobj->m_n偏移地址 = %p\n", mypoint); // 这里
 
     return 0;
 }
@@ -92,5 +92,12 @@ int main()
  * MYACLS::m_pria = 0x19
  * MYACLS::m_prib = 0x1d
  * ------------------------
- * pmyobj->m_n偏移地址 = 21
+ * pmyobj->m_n偏移地址 = 0x15
+ * 
+ * 结论：
+ * ①成员变量地址按照定义的先后顺序排列。
+ * ②public、private、protected等对变量地址没影响
+ * ③pragma pack是用来指定字节对齐标准，默认是4byte
+ * ④打印时，如果用对象成员变量地址就是实际地址，如果用类的成员变量地址就是偏移量
+ * 
  **/
