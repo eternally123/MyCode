@@ -4,6 +4,7 @@ build/
 install/
 _install/
 
+# c/c++
 *.out
 *.o
 *.obj
