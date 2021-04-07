@@ -18,10 +18,7 @@ static void split(const string &s, vector<string> &tokens, const string &delimit
 
 int main()
 {
-    // string s = "123";
-    // int val = atoi(s.c_str());
-    // cout << val;
-    int num = 1;
-    int *val = &num;
-    *val = (*val) + 1;
+    string s = "helloworld!";
+    reverse(s.begin(), s.begin() + 5);
+    cout << s << endl;
 }
