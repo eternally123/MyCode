@@ -3,69 +3,75 @@
 #include <algorithm>
 using namespace std;
 
+struct TreeNode
+{
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+};
+
 class Solution
 {
 public:
-    vector<int> getLeastNumbers(vector<int> &arr, int k)
+    TreeNode *buildTree(vector<int> &preorder, vector<int> &inorder)
     {
-        int size = arr.size();
-        int sortingSize = size;
-        int num = k;
-        while (num > 0)
-        {
-            int index = sortingSize / 2 - 1;
-            while (index >= 0)
-            {
-                if (arr[index] <= arr[2 * index + 1] && arr[index] <= arr[2 * index + 2])
-                {
-                    index--;
-                    continue;
-                }
+        if (preorder.size() == 0)
+            return NULL;
 
-                int tmp;
-                if (arr[2 * index + 1] < arr[2 * index + 2])
-                {
-                    tmp = arr[index];
-                    arr[index] = arr[2 * index + 1];
-                    arr[2 * index + 1] = tmp;
-                    index--;
-                    continue;
-                }
-                else
-                {
-                    tmp = arr[index];
-                    arr[index] = arr[2 * index + 2];
-                    arr[2 * index + 2] = tmp;
-                    index--;
-                    continue;
-                }
-            }
-            int tmp = arr[0];
-            arr[0] = arr[sortingSize - 1];
-            arr[sortingSize - 1] = tmp;
+        TreeNode *root = new TreeNode();
+        buildRoot(preorder, 0, preorder.size(), inorder, 0, inorder.size(), root);
+        return root;
+    }
 
-            sortingSize--;
-            num--;
-        }
-        vector<int> result;
-        for (int i = 0; i < k; i++)
+    /**
+    * 左闭右开
+    **/
+    void buildRoot(vector<int> &preorder, int preorder_begin, int preorder_end, vector<int> &inorder, int inorder_begin, int inorder_end, TreeNode *node)
+    {
+        cout << "======================\n";
+        print(preorder, preorder_begin, preorder_end);
+        print(inorder, inorder_begin, inorder_end);
+        cout << "======================\n\n";
+        if (preorder_begin == preorder_end)
+            return;
+        node->val = preorder[preorder_begin];
+        node->left = NULL;
+        node->right = NULL;
+        if ((preorder_begin + 1) == preorder_end)
+            return;
+
+        int inorder_index = find(inorder.begin() + inorder_begin, inorder.begin() + inorder_end, node->val) - inorder.begin();
+        if (inorder_begin != inorder_index)
         {
-            result.push_back(arr[size - 1 - i]);
-            sort(result.begin(), result.end());
+            TreeNode *leftNode = new TreeNode();
+            node->left = leftNode;
+            int val = inorder[inorder_index - 1];
+            int preorder_index = find(preorder.begin() + preorder_begin, preorder.begin() + preorder_end, val) - preorder.begin();
+            buildRoot(preorder, preorder_begin + 1, preorder_index + 1, inorder, inorder_begin, inorder_index, leftNode);
         }
-        return result;
+        if ((inorder_end - 1) != inorder_index)
+        {
+            TreeNode *rightNode = new TreeNode();
+            node->right = rightNode;
+            int num = inorder_end - inorder_index - 1;
+            buildRoot(preorder, preorder_end - num, preorder_end, inorder, inorder_index + 1, inorder_end, rightNode);
+        }
+    }
+
+    void print(vector<int> &v, int begin, int end)
+    {
+        for (int i = begin; i < end; i++)
+        {
+            cout << v[i] << " ";
+        }
+        cout << endl;
     }
 };
 
 int main()
 {
-    vector<int> v = {3, 2, 1};
-    int size = 2;
+    vector<int> pre = {1, 2, 3};
+    vector<int> ino = {3, 2, 1};
     Solution s;
-    auto result = s.getLeastNumbers(v, size);
-    for (auto i : result)
-    {
-        cout << i << " ";
-    }
-    cout << endl;
+    s.buildTree(pre, ino);
 }
