@@ -8,6 +8,6 @@ int main()
     {
         asio::ip::tcp::socket sock(io);
         listen_agent.accept(sock);
-        sock.send(asio::buffer("hello world"));
+        sock.send(asio::buffer("hello world\n"));
     }
 }
