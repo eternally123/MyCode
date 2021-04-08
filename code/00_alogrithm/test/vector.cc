@@ -1,8 +1,10 @@
 #include <vector>
 #include <iostream>
 #include <algorithm>
+#include <string>
 using namespace std;
 
+<<<<<<< HEAD
 struct TreeNode
 {
     int val;
@@ -74,4 +76,8 @@ int main()
     vector<int> ino = {3, 2, 1};
     Solution s;
     s.buildTree(pre, ino);
+=======
+int main()
+{
+>>>>>>> 42913c033232a650b157a0a03fc564abdd9fb592
 }
