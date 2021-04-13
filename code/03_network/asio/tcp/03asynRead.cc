@@ -9,7 +9,8 @@ class TcpServer
 {
 public:
     TcpServer()
-        : acceptor_(io_, asio::ip::tcp::endpoint(asio::ip::tcp::v4(), 10000))
+        : io_(),
+          acceptor_(io_, asio::ip::tcp::endpoint(asio::ip::tcp::v4(), 10000))
     {
         accept();
     }
@@ -27,8 +28,11 @@ public:
 
     void read(std::shared_ptr<asio::ip::tcp::socket> sockptr)
     {
-        sockptr->async_read_some(asio::buffer(data_, BUFFER_SIZE),
+        sockptr->async_read_some(asio::buffer(data_, 10),
                                  std::bind(&TcpServer::readHandle, this, std::placeholders::_1, std::placeholders::_2, sockptr));
+        // sockptr->async_read_some(asio::buffer(data_, 10),
+                                //  std::bind(&TcpServer::readHandle, this, std::placeholders::_1, std::placeholders::_2, sockptr));
+   
     }
 
     void acceptHandle(asio::error_code err, std::shared_ptr<asio::ip::tcp::socket> sockptr)

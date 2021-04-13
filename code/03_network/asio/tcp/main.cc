@@ -8,20 +8,13 @@
 #include <chrono>
 #include <functional>
 
-void print(const std::error_code &ec)
-{
-    std::cout << "timer" << std::endl;
-}
-
 int main(int argc, char *argv[])
 {
-    asio::io_service ios;
-    asio::steady_timer timer(ios);
-    asio::system_timer t(ios);
-    timer.expires_from_now(std::chrono::seconds(2));
-    timer.async_wait(std::bind(&print, std::placeholders::_1));
-    t.expires_from_now(std::chrono::seconds(3));
-    t.async_wait(std::bind(&print, std::placeholders::_1));
-
-    ios.run();
+    int *p = new int;
+    std::cout << *p << std::endl;
+    int *q = new (p) int(10);
+    std::cout << *q << std::endl;
+    std::cout << *(int *)p << std::endl;
+    delete q;
+    // delete p; //error double delete
 }
