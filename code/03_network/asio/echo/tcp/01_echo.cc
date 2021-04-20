@@ -3,6 +3,7 @@
 #include <memory>
 #include <utility>
 #include <boost/asio.hpp>
+#include <vector>
 
 using boost::asio::ip::tcp;
 
@@ -23,14 +24,12 @@ public:
 private:
     void do_read()
     {
-        auto self(shared_from_this());
         socket_.async_read_some(boost::asio::buffer(data_, max_length),
                                 std::bind(&session::readHandle, shared_from_this(), std::placeholders::_1, std::placeholders::_2));
     }
 
     void do_write(std::size_t length)
     {
-        auto self(shared_from_this());
         boost::asio::async_write(socket_, boost::asio::buffer(data_, length),
                                  std::bind(&session::writeHandle, shared_from_this(), std::placeholders::_1, std::placeholders::_2));
     }
@@ -53,13 +52,12 @@ private:
         }
     }
 
-    tcp::socket socket_;
-
 private:
     enum
     {
         max_length = 1024
     };
+    tcp::socket socket_;
     char data_[max_length];
 };
 
@@ -75,19 +73,24 @@ public:
 private:
     void do_accept()
     {
-        acceptor_.async_accept(
-            [this](boost::system::error_code ec, tcp::socket socket) {
-                if (!ec)
-                {
-                    std::make_shared<session>(std::move(socket))->start();
-                }
+        acceptor_.async_accept(std::bind(&server::acceptHandle, this, std::placeholders::_1, std::placeholders::_2));
+    }
 
-                do_accept();
-            });
+    void acceptHandle(boost::system::error_code ec, tcp::socket socket)
+    {
+        if (!ec)
+        {
+            auto s = std::make_shared<session>(std::move(socket));
+            s->start();
+            sessions_.push_back(s);
+        }
+
+        do_accept();
     }
 
 private:
     tcp::acceptor acceptor_;
+    std::vector<std::shared_ptr<session>> sessions_;
 };
 
 int main(int argc, char *argv[])
