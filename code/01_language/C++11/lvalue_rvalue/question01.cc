@@ -20,12 +20,13 @@ A f()
 
 int main()
 {
-    A val = f(); //非引用返回的函数的临时变量是纯右值
+    A &&val = f(); //非引用返回的函数的临时变量是纯右值
     cout << val.num << endl;
 }
 /**
+ *  g++ main.cc -eno-slide-constructors
  * A &&val = f();
- * A()  A(&&)  ~A()  10  ~A()
+ * A()  A(&&)  ~A()  A(&&)  ~A()  10  ~A()
  * 
  * A val = f()
  * A()  A(&&)  ~A()  A(&&)  ~A()  10  ~A()

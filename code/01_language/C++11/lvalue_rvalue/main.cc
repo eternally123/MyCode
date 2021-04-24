@@ -13,20 +13,9 @@ public:
     int num = 10;
 };
 
-A f()
-{
-    return A();
-}
-
 int main()
 {
-    A val = f(); //非引用返回的函数的临时变量是纯右值
-    cout << val.num << endl;
+    int n = 10;
 }
 /**
- * A &&val = f();
- * A()  A(&&)  ~A()  10  ~A()
- * 
- * A val = f()
- * A()  A(&&)  ~A()  A(&&)  ~A()  10  ~A()
  **/
