@@ -15,3 +15,6 @@ _install/
 *.tar.gz
 *.whl
 *.egg-info
+
+# file
+.file

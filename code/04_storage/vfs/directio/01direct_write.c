@@ -1,3 +1,5 @@
+#define _GNU_SOURCE
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -5,7 +7,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <string.h>
-#define BUF_SIZE 1024 * 10000
+#define BUF_SIZE 1024
 
 int main(int argc, char *argv[])
 {
@@ -23,16 +25,18 @@ int main(int argc, char *argv[])
     fd = open("./direct_io.data", O_WRONLY | O_DIRECT | O_CREAT, 0755);
     if (fd < 0)
     {
-        perror("open ./direct_io.data failed");
+        perror("open ./direct_io.file failed");
         exit(1);
     }
 
-    ret = write(fd, buf, BUF_SIZE);
-    memset(buf + 512 * 9999, 'd', 1);
-    if (ret < 0)
+    do
     {
-        perror("write ./direct_io.data failed");
-    }
+        ret = write(fd, buf, BUF_SIZE);
+        if (ret < 0)
+        {
+            perror("write ./direct_io.data failed");
+        }
+    } while (1);
 
     free(buf);
     close(fd);
