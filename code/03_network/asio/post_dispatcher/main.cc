@@ -1,5 +1,5 @@
 #include <boost/asio.hpp>
-#include <boost/bind.hpp>
+#include <functional>
 #include <iostream>
 #include <string>
 
@@ -17,13 +17,14 @@ void PrintHello()
 
 int main()
 {
-    io_service service;
+    io_context context;
 
-    service.post(PrintHello);
-    service.post(boost::bind(PrintSomething, "whoami"));
+    context.post(PrintHello);
+    context.post(std::bind(PrintSomething, "who am i"));
+    std::cout << "hello world begin\n";
 
-    //service.run_one();
-    service.run();
+    //context.run_one();
+    context.run();
 
     return 0;
 }
