@@ -3,13 +3,17 @@
 #include <fcntl.h>
 #include <stdio.h>
 
+/**
+ * 功能是打开一个文件，然后将hello world写入其中
+ * gcc main.c -luring
+ **/
 int main()
 {
     struct io_uring ring;
     io_uring_queue_init(32, &ring, 0);
 
     struct io_uring_sqe *sqe = io_uring_get_sqe(&ring);
-    int fd = open("/home/wsl/test.txt", O_WRONLY | O_CREAT);
+    int fd = open("test.file", O_WRONLY | O_CREAT);
     struct iovec iov = {
         .iov_base = "Hello world",
         .iov_len = strlen("Hello world"),

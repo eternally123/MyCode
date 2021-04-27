@@ -10,28 +10,18 @@
  * ./a.out test.file
  **/
 
-void callback()
-{
-    printf("callback function\n");
-}
-
 int main(int argc, char *argv[])
 {
     struct io_uring ring;
-    struct io_uring_sqe *sqe, *sqe2; // send queue
-    struct io_uring_cqe *cqe;        // receive queue
+    struct io_uring_sqe *sqe; // send queue
+    struct io_uring_cqe *cqe; // receive queue
     int fd, ret;
-    void (*func)() = callback;
 
     struct iovec iov = {
-        .iov_base = "Hello World\n",
-        .iov_len = strlen("Hello World\n"),
+        .iov_base = "Hello World",
+        .iov_len = strlen("Hello World"),
     };
 
-    struct iovec iov2 = {
-        .iov_base = "Hello World2\n",
-        .iov_len = strlen("Hello World2\n"),
-    };
     if (argc != 2)
     {
         printf("%s: <testfile>\n", argv[0]);
@@ -46,7 +36,7 @@ int main(int argc, char *argv[])
     }
 
     /* 打开文件 */
-    fd = open(argv[1], O_WRONLY | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
+    fd = open(argv[1], O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
     if (fd < 0)
     {
         printf("open failed\n");
@@ -56,17 +46,13 @@ int main(int argc, char *argv[])
 
     /* 2.get an sqe and fill in a WRITEV operation */
     sqe = io_uring_get_sqe(&ring);
-    sqe2 = io_uring_get_sqe(&ring);
-    if (!sqe && !sqe2)
+    if (!sqe)
     {
         printf("io_uring_get_sqe failed\n");
         ret = 1;
         goto out;
     }
     io_uring_prep_writev(sqe, fd, &iov, 1, 0);
-    io_uring_sqe_set_data(sqe, callback);
-    io_uring_prep_writev(sqe2, fd, &iov2, 1, 0);
-    io_uring_sqe_set_data(sqe2, callback);
 
     /* 3.tell the kernel we have an sqe ready for consumption */
     ret = io_uring_submit(&ring);
@@ -83,23 +69,9 @@ int main(int argc, char *argv[])
         printf("io_uring_wait_cqe: %s\n", strerror(-ret));
         goto out;
     }
-    void (*cb)() = (void (*)())io_uring_cqe_get_data(cqe);
-    cb();
+
     /* 5.read and process cqe event */
     io_uring_cqe_seen(&ring, cqe);
-
-    /* 4.wait for the sqe to complete */
-    ret = io_uring_wait_cqe(&ring, &cqe);
-    if (ret < 0)
-    {
-        printf("io_uring_wait_cqe: %s\n", strerror(-ret));
-        goto out;
-    }
-    cb = (void (*)())io_uring_cqe_get_data(cqe);
-    cb();
-    /* 5.read and process cqe event */
-    io_uring_cqe_seen(&ring, cqe);
-
 out:
     close(fd);
 exit:
