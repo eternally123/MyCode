@@ -1,0 +1,63 @@
+Class <anonymous struct>
+   size=8 align=4
+   base size=8 base align=4
+<anonymous struct> (0x0x7f43ce62a720) 0
+
+Class <anonymous struct>::<anonymous union>
+   size=4 align=4
+   base size=4 base align=4
+<anonymous struct>::<anonymous union> (0x0x7f43ce62a7e0) 0
+
+Class <anonymous struct>
+   size=8 align=4
+   base size=8 base align=4
+<anonymous struct> (0x0x7f43ce62a780) 0
+
+Class <anonymous struct>
+   size=16 align=8
+   base size=16 base align=8
+<anonymous struct> (0x0x7f43ce62a840) 0
+
+Class <anonymous struct>
+   size=16 align=8
+   base size=16 base align=8
+<anonymous struct> (0x0x7f43ce62a8a0) 0
+
+Class _IO_marker
+   size=24 align=8
+   base size=24 base align=8
+_IO_marker (0x0x7f43ce62a900) 0
+
+Class _IO_FILE
+   size=216 align=8
+   base size=216 base align=8
+_IO_FILE (0x0x7f43ce62a960) 0
+
+Class <anonymous struct>
+   size=32 align=8
+   base size=32 base align=8
+<anonymous struct> (0x0x7f43ce62a9c0) 0
+
+Class grand
+   size=8 align=8
+   base size=8 base align=8
+grand (0x0x7f43ce62aa20) 0
+
+Vtable for parent
+parent::_ZTV6parent: 3u entries
+0     16u
+8     (int (*)(...))0
+16    (int (*)(...))(& _ZTI6parent)
+
+VTT for parent
+parent::_ZTT6parent: 1u entries
+0     ((& parent::_ZTV6parent) + 24u)
+
+Class parent
+   size=24 align=8
+   base size=16 base align=8
+parent (0x0x7f43ce4d5340) 0
+    vptridx=0u vptr=((& parent::_ZTV6parent) + 24u)
+  grand (0x0x7f43ce62aa80) 16 virtual
+      vbaseoffset=-24
+

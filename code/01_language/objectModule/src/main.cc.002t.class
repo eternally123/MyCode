@@ -1,0 +1,44 @@
+Vtable for grand
+grand::_ZTV5grand: 3u entries
+0     (int (*)(...))0
+8     (int (*)(...))(& _ZTI5grand)
+16    (int (*)(...))grand::g_f
+
+Class grand
+   size=16 align=8
+   base size=12 base align=8
+grand (0x0x7f55079995a0) 0
+    vptr=((& grand::_ZTV5grand) + 16u)
+
+Vtable for grand2
+grand2::_ZTV6grand2: 3u entries
+0     (int (*)(...))0
+8     (int (*)(...))(& _ZTI6grand2)
+16    (int (*)(...))grand2::g2_f
+
+Class grand2
+   size=16 align=8
+   base size=12 base align=8
+grand2 (0x0x7f5507999600) 0
+    vptr=((& grand2::_ZTV6grand2) + 16u)
+
+Vtable for parent
+parent::_ZTV6parent: 7u entries
+0     (int (*)(...))0
+8     (int (*)(...))(& _ZTI6parent)
+16    (int (*)(...))grand::g_f
+24    (int (*)(...))parent::p_f
+32    (int (*)(...))-16
+40    (int (*)(...))(& _ZTI6parent)
+48    (int (*)(...))grand2::g2_f
+
+Class parent
+   size=32 align=8
+   base size=32 base align=8
+parent (0x0x7f5507856380) 0
+    vptr=((& parent::_ZTV6parent) + 16u)
+  grand (0x0x7f5507999660) 0
+      primary-for parent (0x0x7f5507856380)
+  grand2 (0x0x7f55079996c0) 16
+      vptr=((& parent::_ZTV6parent) + 48u)
+
