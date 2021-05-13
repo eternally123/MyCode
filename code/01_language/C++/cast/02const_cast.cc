@@ -2,24 +2,6 @@
 
 using namespace std;
 
-class A
-{
-};
-
-class B : public A
-{
-public:
-    void printa() { cout << "B" << i << endl; }
-    int i = 10;
-};
-
-class C : public A
-{
-public:
-    void print() { cout << "C" << j << endl; }
-    int j = 0;
-};
-
 int main()
 {
     const int a = 100;
