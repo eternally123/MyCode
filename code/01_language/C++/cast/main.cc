@@ -2,31 +2,26 @@
 
 using namespace std;
 
-class A
+void f()
 {
-};
-
-class B : public A
-{
-public:
-    void printa() { cout << "B" << i << endl; }
     int i = 10;
-};
+    int j = 10;
+    int k = 10;
+    int m = 10;
+    int n = 10;
+}
 
-class C : public A
-{
-public:
-    void print() { cout << "C" << j << endl; }
-    int j = 0;
-};
-
-const int a = 100;
 int main()
 {
-    int *pa = const_cast<int *>(&a);
-    *pa = 110;
-    printf("%d,\n", a);
-    printf("%d,\n", *pa);
-    printf("0x%08x\n", &a);
-    printf("0x%08x\n", pa);
+    int i = 10;
+    f();
+    int j = 10;
+    for (int m = 0; m < 10; m++)
+    {
+        int a = 10;
+        int b = 10;
+    }
+
+    int a = 10;
+    int b = 10;
 }
