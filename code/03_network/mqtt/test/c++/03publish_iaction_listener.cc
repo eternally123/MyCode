@@ -15,22 +15,12 @@ public:
     // mqtt::delivery_token_ptr = std::shared<delivery_token>  delivery_token:public token
     virtual void delivery_complete(mqtt::delivery_token_ptr delivery_token_p) override
     {
-        std::cout << "\ncallback::delivery_complet()\n"
+        std::cout << "\ncallback::message_arrived()\n"
                   << "Topic:" << delivery_token_p->get_message()->get_topic()
                   << std::endl
                   << "Message:" << delivery_token_p->get_message()->get_payload()
                   << std::endl
                   << "Message id:" << delivery_token_p->get_message_id() << std::endl
-                  << std::endl;
-    }
-
-    virtual void message_arrived(mqtt::const_message_ptr msg)
-    {
-        std::cout << "\ncallback::message_arrived()\n"
-                  << "Topic:" << msg->get_topic()
-                  << std::endl
-                  << "Message:" << msg->get_payload()
-                  << std::endl
                   << std::endl;
     }
 };
@@ -78,16 +68,49 @@ int main()
         std::cout << "waiting for connect...\n";
         conntok->wait(); //阻塞当前线程直到token关联的动作完成。
         std::cout << "finish connect...\n";
+        std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+
+        // 2.send message
+        // std::cout << "\n\nsending message with a msgptr ......\n";
+        // mqtt::message_ptr pubmsg = mqtt::make_message("topic1", "this is a message");
+        // pubmsg->set_qos(1);
+        // client.publish(pubmsg); //由于用的智能指针，可以多次publish一个消息
+        // client.publish(pubmsg);
+        // client.publish(pubmsg)->wait_for(5);
+        // std::cout << "send ok\n";
         // std::this_thread::sleep_for(std::chrono::milliseconds(5000));
 
-        //2.subscribe
-        std::cout << "ready to subscribe\n";
-        client.subscribe("topic1", 1)->wait();
-        std::cout << "finish subscribe\n\n";
+        //3.send message with deliver_token_ptr
+        // std::cout << "\n\nsending message\n";
+        // mqtt::delivery_token_ptr pubtok;
+        // std::string msg = "deliver_token_ptr message";
+        // pubtok = client.publish("topic1", msg.c_str(), msg.size(), 1, false);
+        // pubtok = client.publish("topic1", msg.c_str(), msg.size(), 1, false);
+        // pubtok = client.publish("topic1", msg.c_str(), msg.size(), 1, false);
+        // pubtok = client.publish("topic1", msg.c_str(), msg.size(), 1, false);
+        // pubtok->wait_for(5);
+        // std::cout << "send ok\n";
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+        // 4.iaction_listener ???有什么用？有什么区别？
+        std::cout << "\n\nsending message\n";
+        action_listener listener;
+        mqtt::message_ptr pubmsg = mqtt::make_message("topic1", "listener message");
+        mqtt::message_ptr pubmsg2 = mqtt::make_message("topic1", "listener message");
+        mqtt::delivery_token_ptr pubtok;
+        mqtt::delivery_token_ptr pubtok2;
+        pubmsg->set_qos(1);
+        pubmsg2->set_qos(1);
+        pubtok = client.publish(pubmsg, nullptr, listener);
+        pubtok2 = client.publish(pubmsg2, nullptr, listener);
+        pubtok->wait_for(5);
+        pubtok2->wait_for(5);
+        std::cout << "send ok\n";
+
+        //5.subscribe
+
+        //5.disconnect
         client.disconnect()->wait();
-        return 0;
+        std::cout << "disconnect ...ok" << std::endl;
     }
     catch (const mqtt::exception &exc)
     {
