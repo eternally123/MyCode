@@ -14,7 +14,6 @@ void waits()
 {
     std::unique_lock<std::mutex> lk(cv_m);
     std::cerr << "Waiting... \n";
-    //相当于while循环，可以看源码
     cv.wait(lk, []
             { return i == 1; });
     std::cerr << "...finished waiting. i == 1\n";
@@ -31,12 +30,11 @@ void signals()
 
     std::this_thread::sleep_for(std::chrono::seconds(1));
 
-    std::lock_guard<std::mutex> lk(cv_m);
-    i = 1;
-    std::cerr << "Notifying again...\n";
-
-    //sleep 5s 由于lc没有释放cv_m的lock，会导致消费者线程被唤醒，然后又因为无法拿到cv_m的lock而睡眠，直到本线程释放lock
-    std::this_thread::sleep_for(std::chrono::seconds(5));
+    {
+        std::lock_guard<std::mutex> lk(cv_m);
+        i = 1;
+        std::cerr << "Notifying again...\n";
+    }
 
     cv.notify_all();
 }

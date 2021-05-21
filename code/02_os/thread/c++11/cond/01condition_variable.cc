@@ -11,20 +11,23 @@ bool ready = false;    // 全局标志位.
 
 void do_print_id(int id)
 {
-    unique_lock<mutex> lck(mtx);
-    while (!ready)    // 如果标志位不为 true, 则等待...
-        cv.wait(lck); // 当前线程被阻塞, 当全局标志位变为 true 之后,
-                      // 线程被唤醒, 继续往下执行打印线程编号id.
+    {
+        unique_lock<mutex> lck(mtx);
+        while (!ready)    // 如果标志位不为 true, 则等待...
+            cv.wait(lck); // 当前线程被阻塞, 当全局标志位变为 true 之后,
+    }
+    // 线程被唤醒, 继续往下执行打印线程编号id.
     cout << "thread " << id << '\n';
 }
 
 void go()
 {
-    unique_lock<mutex> lck(mtx);
-    ready = true; // 设置全局标志位为 true.
-    // cv.notify_all(); // 唤醒所有线程.
-    cv.notify_one();
-    cv.notify_one();
+    {
+        unique_lock<mutex> lck(mtx);
+        ready = true; // 设置全局标志位为 true.
+    }
+    cv.notify_all(); // 唤醒所有线程.
+    // cv.notify_one();
 }
 
 int main()

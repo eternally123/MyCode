@@ -25,7 +25,7 @@ int main()
     cout << this_thread::get_id() << endl;
     PrintThread t;
     thread t1(&PrintThread::dummy, &t, 100);
-    cout << t1.native_handle() << endl;
+    cout << t1.native_handle() << endl; //pthread_t类型
     cout << t1.get_id() << endl;
     t1.detach();
     this_thread::sleep_for(chrono::seconds(1));

@@ -17,7 +17,7 @@ int main()
     thread t1(func);
     t1.detach();
     this_thread::sleep_for(chrono::seconds(2));
-    mu.lock();
+    mu.lock(); // 死锁，如果不是多线程会优化掉加锁，就不会死锁。
     cout << "print something" << endl;
 }
 
