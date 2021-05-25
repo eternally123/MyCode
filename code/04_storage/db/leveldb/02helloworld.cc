@@ -17,12 +17,16 @@ int main()
 
     std::string key = "name";
 
+#if defined(WRITE_MODE)
     std::string value = "Jeff Dean";
     //写入key, value
-    for(int i=0;i<500000;i++){
-        status = db->Put(leveldb::WriteOptions(), std::to_string(i), std::to_string(i));
-        //std::cout << "write key:" << key << " value:" << value << " " << status.ToString() << std::endl;
-}    
+    status = db->Put(leveldb::WriteOptions(), key, value);
+    std::cout << "write key:" << key << " value:" << value << " " << status.ToString() << std::endl;
+#else
+    std::string db_value;
+    status = db->Get(leveldb::ReadOptions(), key, &db_value);
+    std::cout << "read key:" << key << " value:" << db_value << " " << status.ToString() << std::endl;
+#endif
     delete db;
     return 0;
 }
