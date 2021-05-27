@@ -20,4 +20,4 @@ _install/
 .file
 
 # html
-.html
+*.html
