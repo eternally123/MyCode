@@ -21,3 +21,6 @@ _install/
 
 # html
 *.html
+
+# db
+*.db/
