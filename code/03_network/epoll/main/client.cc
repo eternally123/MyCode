@@ -34,9 +34,9 @@ int main()
 		}
 
 		send(sockfd, buff, strlen(buff) - 1, 0);
-		sleep(3);
+		// close(sockfd);
+		// sleep(3);
 		shutdown(sockfd, SHUT_WR);
-		break;
 
 		char result[128] = {0};
 		int n = recv(sockfd, result, 127, 0);
@@ -46,8 +46,10 @@ int main()
 		}
 
 		printf("result: %s\n", result);
+		break;
 	}
 
-	close(sockfd);
+	// sleep(5);
+	// close(sockfd);
 	exit(0);
 }

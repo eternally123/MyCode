@@ -62,7 +62,7 @@ void GetNewClient(int fd, int epfd)
 	// 将新的客户端文件描述符添加到内核事件表中
 	struct epoll_event events;
 	events.data.fd = c;
-	events.events = EPOLLIN | EPOLLOUT;
+	events.events = EPOLLIN;
 
 	int res = epoll_ctl(epfd, EPOLL_CTL_ADD, c, &events);
 	assert(res != -1);
@@ -72,21 +72,26 @@ void GetNewClient(int fd, int epfd)
 void DealClientData(int fd)
 {
 	char buff[128] = {0};
-	int n = recv(fd, buff, 1, 0); // 将接收的字符设置为一个以便观察LT的结果
+	int n = recv(fd, buff, 128, 0); // 将接收的字符设置为一个以便观察LT的结果
 	//sleep(4);
 	if (n <= 0)
 	{
-		printf("%d recv error\n", fd);
+		printf("fd=%d recv error\n", fd);
+		// sleep(2);
+
+		send(fd, "OK", 2, 0);
+		close(fd);
 		return;
 	}
 
-	printf("%d: %s\n", fd, buff);
-	send(fd, "OK", 2, 0);
+	printf("fd=%d: %s\n", fd, buff);
+	// send(fd, "OK", 2, 0);
 }
 
 void printEvents(uint32_t event)
 {
 	std::cout << "events are:"
+		  << ((event & EPOLLERR) ? "EPOLLERR " : "")
 		  << ((event & EPOLLRDHUP) ? "EPOLLRDHUP " : "")
 		  << ((event & EPOLLHUP) ? "EPOLLHUP " : " ")
 		  << ((event & EPOLLIN) ? "EPOLLIN " : " ")
@@ -105,7 +110,7 @@ void DealFinshEvents(struct epoll_event *events, int n, int epfd, int sockfd)
 		{
 			// 获取新的客户端链接，并添加到epfd中
 			GetNewClient(fd, epfd);
-			sleep(4);
+			// sleep(4);
 		}
 		else
 		{
@@ -162,7 +167,7 @@ int main()
 			continue;
 		}
 
-		printf("epoll_wait return %d\n", count++);
+		printf("n = %d ,epoll_wait return %d\n", n, count++);
 
 		// 处理就绪事件
 		DealFinshEvents(events, n, epfd, sockfd);
